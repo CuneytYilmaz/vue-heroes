@@ -2,7 +2,7 @@
 
 This project is seen in demos including the Pluralsight course "Vue: Getting Started" to help represent a fundamental app written with Vue. The heroes and villains theme is used throughout the app.
 
-by [John Papa](http://twitter.com/john_papa)
+by [Cüneyt Yılmaz](http://twitter.com/cuneytyilmazz)
 
 ## Quick Start
 
