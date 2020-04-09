@@ -193,3 +193,17 @@ textarea.invalid,
 select.invalid {
   border-left: 10px red solid !important;
 }
+
+.list-item {
+  color: #000;
+  &:hover {
+    color: $accent-color;
+  }
+  &.is-active {
+    background-color: $accent-color;
+    border-radius: 0;
+    border-top: #fff solid 1px;
+    border-bottom: #fff solid 1px;
+    color: #fff;
+  }
+}
