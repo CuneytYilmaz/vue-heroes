@@ -17,6 +17,7 @@
 
 <script>
 export default {
+  name: 'HeaderBarLinks',
   data() {
     return {
       github: 'https://github.com/CuneytYilmaz/vue-getting-started',
