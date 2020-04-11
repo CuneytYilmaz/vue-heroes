@@ -4,7 +4,6 @@
       <h2 class="title">Heroes</h2>
       <div class="columns">
         <div class="column is-8" v-if="heroes">
-          <!-- <heroes-list> -->
           <ul v-if="!selectedHero">
             <li v-for="hero in heroes" :key="hero.id">
               <div class="card">
@@ -28,13 +27,12 @@
               </div>
             </li>
           </ul>
-          <!-- <heroes-list> -->
-
-          <!-- <hero-detail> -->
-          <HeroDetail v-if="selectedHero" :hero="selectedHero"
-            @save="saveHero" @cancel="cancelHero" />
-          <!-- </hero-detail> -->
-
+          <HeroDetail
+            :hero="selectedHero"
+            @save="saveHero"
+            @cancel="cancelHero"
+            v-if="selectedHero"
+          />
           <div class="notification is-info" v-show="message">{{ message }}</div>
         </div>
       </div>
@@ -43,7 +41,7 @@
 </template>
 
 <script>
-import { ourHeroes, lifecycleHooks, heroWatchers, logger } from '../shared';
+import { heroWatchers, lifecycleHooks, data } from '../shared';
 import HeroDetail from '@/components/hero-detail';
 export default {
   name: 'Heroes',
@@ -56,23 +54,17 @@ export default {
     };
   },
   components: {
-    HeroDetail
+    HeroDetail,
   },
-  created() {
-    this.loadHeroes();
-    logger.info(`${this.componentName} created`);
+  mixins: [lifecycleHooks, heroWatchers],
+  async created() {
+    await this.loadHeroes();
   },
-  mixins: [ lifecycleHooks, heroWatchers ],
   methods: {
-    async getHeroes() {
-      return new Promise(resolve => {
-        setTimeout(() => resolve(ourHeroes), 1500);
-      });
-    },
     async loadHeroes() {
       this.heroes = [];
       this.message = 'getting the heroes, please be patient';
-      this.heroes = await this.getHeroes();
+      this.heroes = await data.getHeroes();
       this.message = '';
     },
     cancelHero() {
