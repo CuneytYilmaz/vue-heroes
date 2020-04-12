@@ -5,16 +5,16 @@
       <p>here are some helpful resources for this project.</p>
       <p>
         by
-        <a href="http://twitter.com/john_papa">John Papa</a>
+        <a href="http://twitter.com/cuneytyilmazz">Cüneyt Yılmaz</a>
       </p>
       <br />
       <h3 class="title sub-title">Source Code</h3>
       <p>You can find the source code for this project at the link below</p>
       <p>
         <a
-          href="https://github.com/johnpapa/vue-getting-started"
+          href="https://github.com/cuneytyilmaz/vue-heroes"
           target="_blank"
-          >github.com/johnpapa/vue-getting-started</a
+          >github.com/cuneytyilmaz/vue-getting-started</a
         >
       </p>
       <br />

@@ -58,7 +58,7 @@
 
 <script>
 import { format } from 'date-fns';
-import { displayDateFormat, lifecycleHooks } from '../shared';
+import { dataService, lifecycleHooks } from '../shared';
 export default {
   name: 'HeroDetail',
   props: {
@@ -71,6 +71,9 @@ export default {
       return {
           clonedHero: { ...this.hero }
       }
+  },
+  async created() {
+    this.hero = await dataService.getHero(this.id);
   },
   computed: {
     fullName() {
