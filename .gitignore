@@ -2,6 +2,7 @@
 
 # dependencies
 /node_modules
+/xx-final/vue-heroes/node_modules
 
 # testing
 /coverage
