@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import { dataService, lifecycleHooks, heroWatchers } from '../shared';
+import { dataService, heroWatchers } from '../shared';
 export default {
   name: 'Heroes',
   data() {
@@ -45,7 +45,7 @@ export default {
       capeMessage: '',
     };
   },
-  mixins: [lifecycleHooks, heroWatchers],
+  mixins: [heroWatchers],
   async created() {
     await this.loadHeroes();
   },
@@ -55,14 +55,6 @@ export default {
       this.message = 'getting the heroes, please be patient';
       this.heroes = await dataService.getHeroes();
       this.message = '';
-    },
-    cancelHero() {
-      this.selectedHero = undefined;
-    },
-    saveHero(hero) {
-      const index = this.heroes.findIndex(h => h.id === hero.id);
-      this.heroes.splice(index, 1, hero);
-      this.heroes = [...this.heroes];
     },
   },
 };

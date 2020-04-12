@@ -8,37 +8,37 @@
         <div class="field">
           <label class="label" for="id">id</label>
           <label class="input" name="id" readonly>
-            {{ clonedHero.id }}
+            {{ hero.id }}
           </label>
         </div>
         <div class="field">
           <label class="label" for="firstName">first name</label>
-          <input class="input" name="firstName" v-model="clonedHero.firstName" />
+          <input class="input" name="firstName" v-model="hero.firstName" />
         </div>
         <div class="field">
           <label class="label" for="lastName">last name</label>
-          <input class="input" name="lastName" v-model="clonedHero.lastName" />
+          <input class="input" name="lastName" v-model="hero.lastName" />
         </div>
         <div class="field">
           <label class="label" for="description">description</label>
-          <input class="input" name="description" v-model="clonedHero.description" />
+          <input class="input" name="description" v-model="hero.description" />
         </div>
         <div class="field">
           <label class="label" for="originDate">origin date</label>
-          <input type="date" class="input" id="originDate" v-model="clonedHero.originDate" />
+          <input type="date" class="input" id="originDate" v-model="hero.originDate" />
           <p class="comment">
             My origin story began on
-            {{ clonedHero.originDate | shortDate }}
+            {{ hero.originDate | shortDate }}
           </p>
         </div>
         <div class="field">
           <label class="label" for="capeCounter">cape counter</label>
-          <input class="input" name="capeCounter" type="number" v-model="clonedHero.capeCounter" />
+          <input class="input" name="capeCounter" type="number" v-model="hero.capeCounter" />
         </div>
         <div class="field">
           <label class="label" for="capeMessage">cape message</label>
           <label class="input" name="capeMessage">
-            {{ clonedHero.capeMessage }}
+            {{ hero.capeMessage }}
           </label>
         </div>
       </div>
@@ -58,18 +58,19 @@
 
 <script>
 import { format } from 'date-fns';
-import { dataService, lifecycleHooks } from '../shared';
+import { dataService } from '../shared';
+import { displayDateFormat } from '../shared/constants';
 export default {
   name: 'HeroDetail',
   props: {
-    hero: {
-      type: Object,
-      default: () => {},
+    id: {
+      type: Number,
+      default: 0,
     },
   },
   data() {
       return {
-          clonedHero: { ...this.hero }
+          hero: { }
       }
   },
   async created() {
@@ -77,39 +78,42 @@ export default {
   },
   computed: {
     fullName() {
-      return this.clonedHero
-        ? `${this.clonedHero.firstName} ${this.clonedHero.lastName}`
+      return this.hero
+        ? `${this.hero.firstName} ${this.hero.lastName}`
         : '';
     },
   },
-  mixins: [ lifecycleHooks ],
+  // mixins: [ lifecycleHooks ],
   methods: {
-    saveHero() {
-        this.$emit("save", this.clonedHero);
+    async saveHero() {
+        // this.$emit("save", this.hero);
+        await dataService.updateHero(this.hero);
+        this.$router.push({ name: 'heroes' });
     },
     cancelHero() {
-        this.$emit("cancel");
+        // this.$emit("cancel");
+        this.$router.push({ name: 'heroes' });
     },
     handleTheCapes(newValue) {
       const value = parseInt(newValue, 10);
       switch (value) {
         case 0:
-          this.clonedHero.capeMessage = 'Where is my cape?';
+          this.hero.capeMessage = 'Where is my cape?';
           break;
         case 1:
-          this.clonedHero.capeMessage = 'One is all I need';
+          this.hero.capeMessage = 'One is all I need';
           break;
         case 2:
-          this.clonedHero.capeMessage = 'Alway have a spare';
+          this.hero.capeMessage = 'Alway have a spare';
           break;
         default:
-          this.clonedHero.capeMessage = 'You can never have enough capes';
+          this.hero.capeMessage = 'You can never have enough capes';
           break;
       }
     },
   },
   watch: {
-    'clonedHero.capeCounter': {
+    'hero.capeCounter': {
       immediate: true,
       handler(newValue, oldValue) {
         console.log(

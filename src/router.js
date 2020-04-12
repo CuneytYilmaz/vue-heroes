@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Heroes from './views/heroes'
-import HeroDetail from './views/hero-detail'
+import NotFound from './views/page-not-found'
 
 Vue.use(Router)
+const parseProps = route => ({ id: parseInt(route.params.id) });
 
 export default new Router({
   mode: 'history',
@@ -16,13 +16,13 @@ export default new Router({
     {
       path: '/heroes',
       name: 'heroes',
-      component: Heroes
+      component: () => import(/* webpackChunkName: "bundle-heroes" */ './views/heroes.vue'),
     },
     {
       path: '/heroes/:id',
       name: 'hero-detail',
-      component: HeroDetail,
-      props: true
+      component: () => import(/* webpackChunkName: "bundle-heroes" */ './views/hero-detail.vue'),
+      props: parseProps
     },
     {
       path: '/about',
@@ -31,6 +31,10 @@ export default new Router({
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () => import(/* webpackChunkName: "about" */ './views/about.vue')
+    },
+    {
+      path: '*',
+      component: NotFound
     }
   ]
 })
